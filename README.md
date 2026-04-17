@@ -8,8 +8,6 @@ GKD 个人自用订阅规则。基于 [AIsouler/GKD_subscription](https://github
 
 ### GitHub 源 (实时更新)
 
-https://raw.githubusercontent.com/bemyselfyb/GKD_subscription/main/dist/horizon.json5
-
 ```
 https://raw.githubusercontent.com/bemyselfyb/GKD_subscription/main/dist/horizon.json5
 ```
@@ -17,8 +15,6 @@ https://raw.githubusercontent.com/bemyselfyb/GKD_subscription/main/dist/horizon.
 ---
 
 ### jsDelivr 源 (更新滞后)
-
-https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.json5
 
 ```
 https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.json5
