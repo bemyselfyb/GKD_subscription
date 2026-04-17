@@ -2,8 +2,6 @@
 
 GKD 个人自用订阅规则。基于 [AIsouler/GKD_subscription](https://github.com/AIsouler/GKD_subscription) 修改。
 
-────────────────────────
-
 ## 📥 订阅地址
 
 ### GitHub 源 (实时更新)
@@ -12,15 +10,11 @@ GKD 个人自用订阅规则。基于 [AIsouler/GKD_subscription](https://github
 https://raw.githubusercontent.com/bemyselfyb/GKD_subscription/main/dist/horizon.json5
 ```
 
-────────────────────────
-
 ### jsDelivr 源 (更新滞后)
 
 ```
 https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.json5
 ```
-
-────────────────────────
 
 ## ⚠️ 说明
 
@@ -28,8 +22,6 @@ https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.jso
 - **禁止在国内平台传播**
 - **精力有限，随缘更新**
 - **建议按需开启规则，不要无脑开启全部，以免造成手机耗电或触发缓慢**
-
-────────────────────────
 
 ## 📚 相关文档
 
@@ -39,8 +31,6 @@ https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.jso
 - [GKD 规则编写教程](https://github.com/Snoopy1866/notebook/blob/main/04%20Others/GKD%20%E8%A7%84%E5%88%99%E7%BC%96%E5%86%99%E6%95%99%E7%A8%8B/gkd-rule-tutorial.md)
 - [GKD 网页审查工具增强脚本](https://github.com/adproqwq/MakeGKDInspectBetter)
 - [GKD 订阅模板](https://github.com/gkd-kit/subscription-template)
-
-────────────────────────
 
 ## ⚖️ 感谢
 
