@@ -2,7 +2,7 @@
 
 GKD 个人自用订阅规则。基于 [AIsouler/GKD_subscription](https://github.com/AIsouler/GKD_subscription) 修改。
 
----
+────────────────────────
 
 ## 📥 订阅地址
 
@@ -12,7 +12,7 @@ GKD 个人自用订阅规则。基于 [AIsouler/GKD_subscription](https://github
 https://raw.githubusercontent.com/bemyselfyb/GKD_subscription/main/dist/horizon.json5
 ```
 
----
+────────────────────────
 
 ### jsDelivr 源 (更新滞后)
 
@@ -20,7 +20,7 @@ https://raw.githubusercontent.com/bemyselfyb/GKD_subscription/main/dist/horizon.
 https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.json5
 ```
 
----
+────────────────────────
 
 ## ⚠️ 说明
 
@@ -29,7 +29,7 @@ https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.jso
 - **精力有限，随缘更新**
 - **建议按需开启规则，不要无脑开启全部，以免造成手机耗电或触发缓慢**
 
----
+────────────────────────
 
 ## 📚 相关文档
 
@@ -40,7 +40,7 @@ https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.jso
 - [GKD 网页审查工具增强脚本](https://github.com/adproqwq/MakeGKDInspectBetter)
 - [GKD 订阅模板](https://github.com/gkd-kit/subscription-template)
 
----
+────────────────────────
 
 ## ⚖️ 感谢
 
