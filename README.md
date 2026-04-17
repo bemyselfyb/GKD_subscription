@@ -1,6 +1,6 @@
 # Horizon GKD | Private
 
-GKD 个人自用订阅规则。基于 [AIsouler/GKD_subscription](https://github.com/AIsouler/GKD_subscription) 修改。
+GKD 个人自用订阅规则。基于 [AIsouler/GKD_subscription](https://github.com/AIsouler/GKD_subscription) fork 后修改。
 
 ## 📥 订阅地址
 
@@ -32,6 +32,6 @@ https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.jso
 - [GKD 网页审查工具增强脚本](https://github.com/adproqwq/MakeGKDInspectBetter)
 - [GKD 订阅模板](https://github.com/gkd-kit/subscription-template)
 
-## ⚖️ 感谢
+## ⚖️ 感谢以下开发者的贡献
 
-感谢 [AIsouler](https://github.com/AIsouler) 提供的原始规则与项目基础。
+![img](https://contrib.rocks/image?repo=AIsouler/GKD_subscription&_v=0)
