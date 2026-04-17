@@ -21,7 +21,8 @@ export default defineGkdSubscription({
   version: 0,
   author: 'Horizon',
   checkUpdateUrl: './horizon.version.json5',
-  supportUri: 'https://github.com/bemyselfyb/GKD_subscription/issues/new/choose',
+  supportUri:
+    'https://github.com/bemyselfyb/GKD_subscription/issues/new/choose',
   categories,
   globalGroups,
   apps: rawApps,
