@@ -14,7 +14,8 @@ export default defineGkdApp({
         {
           fastQuery: true,
           activityIds: '.ui.activity.AdvertrisementActivity',
-          matches: 'RelativeLayout[childCount=3] > [vid="iv_bottom_view"] - [text$="跳转"][clickable=true][visibleToUser=true]',
+          matches:
+            'RelativeLayout[childCount=3] > [vid="iv_bottom_view"] - [text$="跳转"][clickable=true][visibleToUser=true]',
           snapshotUrls: 'https://i.gkd.li/i/26194519',
         },
       ],
