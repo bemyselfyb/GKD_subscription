@@ -20,8 +20,8 @@ https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.jso
 ```
 
 ## 📊 规则统计
-- **当前版本**: v0
-- **统计信息**: 已适配 887 个应用，共有 2075 应用规则组
+- **当前版本**: v1
+- **统计信息**: 已适配 370 个应用，共有 1198 应用规则组
 
 ## ⚠️ 说明
 
@@ -41,4 +41,4 @@ https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.jso
 
 ## ⚖️ 感谢以下开发者的贡献
 
-![img](https://contrib.rocks/image?repo=AIsouler/GKD_subscription&_v=0)
+![img](https://contrib.rocks/image?repo=AIsouler/GKD_subscription&_v=1)
