@@ -1,6 +1,6 @@
 # Horizon GKD | Private
 
-GKD 个人自用订阅规则。基于 [AIsouler/GKD_subscription](https://github.com/AIsouler/GKD_subscription) 修改。
+GKD 个人自用订阅规则。基于 [AIsouler/GKD_subscription](https://github.com/AIsouler/GKD_subscription) fork后修改。
 
 ## 📥 订阅地址
 
