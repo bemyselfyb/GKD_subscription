@@ -16,6 +16,10 @@ https://raw.githubusercontent.com/bemyselfyb/GKD_subscription/main/dist/horizon.
 https://fastly.jsdelivr.net/gh/bemyselfyb/GKD_subscription@main/dist/horizon.json5
 ```
 
+## 📊 规则统计
+- **当前版本**: v0
+- **统计信息**: 已适配 887 个应用，共有 2075 应用规则组
+
 ## ⚠️ 说明
 
 - **本仓库仅供本人学习使用**
