@@ -5,6 +5,24 @@ export default defineGkdApp({
   name: '拼多多',
   groups: [
     {
+      key: 0,
+      name: '开屏广告',
+      matchTime: 10000,
+      actionMaximum: 1,
+      resetMatch: 'app',
+      priorityTime: 10000,
+      rules: [
+        {
+          fastQuery: true,
+          excludeActivityIds: '.activity.NewPageActivity',
+          matches:
+            '[text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/25691473',
+          excludeSnapshotUrls: 'https://i.gkd.li/i/25691480',
+        },
+      ],
+    },
+    {
       key: 1,
       name: '更新提示',
       matchTime: 10000,
@@ -65,7 +83,7 @@ export default defineGkdApp({
         {
           key: 4,
           fastQuery: true,
-          activityIds: 'com.xunmeng.pinduoduo.ui.activity.HomeActivity',
+          activityIds: '.ui.activity.HomeActivity',
           matches:
             '@ViewGroup[clickable=true] - ViewGroup[childCount=3] >2 [text="其他"]',
           snapshotUrls: 'https://i.gkd.li/i/15103543',
@@ -73,7 +91,7 @@ export default defineGkdApp({
         {
           key: 5,
           fastQuery: true,
-          activityIds: 'com.xunmeng.pinduoduo.activity.NewPageMaskActivity',
+          activityIds: '.activity.NewPageMaskActivity',
           matches: [
             '[text="继续拼单"]',
             '@[clickable=true] > [text="先去逛逛"]',
@@ -125,7 +143,19 @@ export default defineGkdApp({
           key: 10,
           activityIds: '.activity.NewPageActivity',
           matches: '[desc="关闭按钮"]',
-          snapshotUrls: 'https://i.gkd.li/i/23383792',
+          action: 'clickCenter', // 此界面不接受无障碍事件
+          snapshotUrls: [
+            'https://i.gkd.li/i/23383792',
+            'https://i.gkd.li/i/26264920',
+          ],
+        },
+        {
+          key: 11,
+          fastQuery: true,
+          activityIds: '.ui.activity.HomeActivity',
+          matches:
+            '@ViewGroup[width<86 && height<86][clickable=true][focusable=true][clickable=true] + ViewGroup [text="元"]',
+          snapshotUrls: 'https://i.gkd.li/i/25572172',
         },
       ],
     },
@@ -133,7 +163,7 @@ export default defineGkdApp({
       key: 6,
       name: '局部广告-悬浮广告',
       desc: '点击关闭',
-      activityIds: 'com.xunmeng.pinduoduo.ui.activity.HomeActivity',
+      activityIds: '.ui.activity.HomeActivity',
       rules: [
         {
           key: 0,
@@ -150,7 +180,6 @@ export default defineGkdApp({
         },
         {
           key: 2,
-          activityIds: 'com.xunmeng.pinduoduo.ui.activity.HomeActivity',
           matches:
             'RelativeLayout[childCount=2] > RelativeLayout[vid="pdd"] + @FrameLayout[childCount=1][clickable=true][visibleToUser=true][text=null][vid="pdd"] > ImageView[childCount=0][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/0f850878-2b6a-46c7-86aa-28329df0993c',
@@ -159,7 +188,6 @@ export default defineGkdApp({
         {
           key: 3,
           name: '多多视频金币提示',
-          activityIds: '.ui.activity.HomeActivity',
           matches: '[text^="看5分钟视频"] -2 Image',
           snapshotUrls: 'https://i.gkd.li/i/25088623',
         },
@@ -168,11 +196,11 @@ export default defineGkdApp({
     {
       key: 8,
       name: '局部广告-商品详情页视频讲解窗口',
-      desc: '点击关闭',
+      desc: '点击关闭⚠️需禁止pdd悬浮窗权限,否则无焦点导致失效',
       rules: [
         {
           fastQuery: true,
-          activityIds: 'com.xunmeng.pinduoduo.activity.NewPageActivity',
+          activityIds: '.activity.NewPageActivity',
           matches: '[vid="iv_float_window_close"]',
           exampleUrls: 'https://e.gkd.li/f81a45e4-09b4-498f-be72-ca84cdd0db83',
           snapshotUrls: 'https://i.gkd.li/i/14549415',
@@ -185,7 +213,7 @@ export default defineGkdApp({
       fastQuery: true,
       matchTime: 10000,
       actionMaximum: 1,
-      activityIds: 'com.xunmeng.pinduoduo.ui.activity.HomeActivity',
+      activityIds: '.ui.activity.HomeActivity',
       rules: [
         {
           key: 0,
@@ -212,7 +240,7 @@ export default defineGkdApp({
       name: '全屏广告-多多视频划到广告自动跳过',
       desc: '点击返回自动刷新，从而跳过广告',
       fastQuery: true,
-      activityIds: 'com.xunmeng.pinduoduo.ui.activity.HomeActivity',
+      activityIds: '.ui.activity.HomeActivity',
       rules: [
         {
           key: 0,
@@ -238,8 +266,7 @@ export default defineGkdApp({
       fastQuery: true,
       rules: [
         {
-          activityIds:
-            'com.xunmeng.pinduoduo.app_album.album.MultiImageSelectorActivity',
+          activityIds: '.app_album.album.MultiImageSelectorActivity',
           matches: '@[text="原图"][checked=false] + [text="发送"]',
           snapshotUrls: [
             'https://i.gkd.li/i/13925378', // checked=false
@@ -256,8 +283,8 @@ export default defineGkdApp({
         {
           key: 0,
           activityIds: [
-            'com.xunmeng.pinduoduo.activity.NewPageMaskActivity',
-            'com.xunmeng.pinduoduo.ui.activity.HomeActivity',
+            '.activity.NewPageMaskActivity',
+            '.ui.activity.HomeActivity',
           ],
           action: 'clickCenter',
           matches: 'Button[text="关闭弹窗" || desc="关闭弹窗"][clickable=true]',
@@ -268,6 +295,17 @@ export default defineGkdApp({
             'https://i.gkd.li/i/13308175',
             'https://i.gkd.li/i/23256823',
           ],
+        },
+        {
+          preKeys: [0],
+          name: '二级全屏推荐',
+          matchTime: 10000,
+          fastQuery: true,
+          activityIds: '.activity.NewPageActivity',
+          matches:
+            '@LinearLayout[clickable=true][width<105 && height<99] + * > [text$="下单成功"][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/28313219',
+          exampleUrls: 'https://e.gkd.li/a6d0caff-1785-4ff2-b2fb-e7bffa13502f',
         },
       ],
     },
@@ -333,7 +371,7 @@ export default defineGkdApp({
       resetMatch: 'app',
       rules: [
         {
-          activityIds: 'com.xunmeng.pinduoduo.ui.activity.HomeActivity',
+          activityIds: '.ui.activity.HomeActivity',
           matches: ['[text="个性化推荐未开启"]', '[text="取消"]'],
           exampleUrls: 'https://e.gkd.li/816070f2-035d-4702-87e3-441cca8b5430',
           snapshotUrls: 'https://i.gkd.li/i/14964851',
@@ -363,6 +401,125 @@ export default defineGkdApp({
           activityIds: '.activity.NewPageActivity',
           matches: '[text="搜索图片同款商品"][visibleToUser=true]',
           snapshotUrls: 'https://i.gkd.li/i/19340768',
+        },
+      ],
+    },
+    {
+      key: 22,
+      name: '功能类-自动处方流程',
+      desc: '自动点击处方流程到支付',
+      fastQuery: true,
+      activityIds: '.activity.NewPageActivity',
+      rules: [
+        {
+          key: 0,
+          name: '点击已确诊的疾病', // 否则无法继续
+          actionMaximum: 1,
+          matches: '[text="选择已确诊的疾病"] + View > * > TextView[index=0]',
+          snapshotUrls: 'https://i.gkd.li/i/25639924',
+          excludeMatches: 'RelativeLayout > [text="请选择已确诊的疾病"]', // 排除匹配
+          excludeSnapshotUrls: 'https://i.gkd.li/i/25639813', // 无法点击继续
+          exampleUrls: 'https://e.gkd.li/f92b5d13-da8a-4eb2-b981-66bdc12b9c1c',
+        },
+        {
+          key: 1,
+          name: '点击提交并开药',
+          preKeys: [0],
+          matches:
+            '@[text="提交并开药"][clickable=true][visibleToUser=true] -n [index=0] < [id="main"] < [text^="购买处方药"] <<n [id="android:id/content"]',
+          snapshotUrls: 'https://i.gkd.li/i/25639924',
+        },
+        {
+          key: 2,
+          name: '点击无需补充，立即开方',
+          preKeys: [1],
+          matchDelay: 2600, // 等待界面稳定后再匹配
+          matches:
+            '@[clickable=true] >2 [text="无需补充，立即开方"][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/25639993',
+          exampleUrls: 'https://e.gkd.li/5a9c65aa-8b3f-4076-a7d1-20b537526f5b',
+        },
+        {
+          name: '点击立即支付',
+          preKeys: [2],
+          matchDelay: 2600, // 等待处方下来
+          matches: '@[clickable=true] >2 [text="立即支付"][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/25640017',
+          exampleUrls: 'https://e.gkd.li/31396caf-8a11-484e-9ece-c273a05939ab',
+        },
+      ],
+    },
+    {
+      key: 23,
+      name: '功能类-订单详页-展开更多',
+      desc: '自动展开更多信息',
+      activityIds: '.activity.NewPageActivity',
+      rules: [
+        {
+          action: 'clickCenter',
+          anyMatches: [
+            'Button[text="查看更多订单信息"]', // 不响应无障碍事件
+            'View[text^="收货人信息"] > [text="展开"][visibleToUser=true]',
+          ],
+          snapshotUrls: 'https://i.gkd.li/i/27208567',
+          exampleUrls: 'https://e.gkd.li/fb06904f-b996-49a8-8db3-3e44059d704d',
+        },
+      ],
+    },
+    {
+      key: 24,
+      name: '功能类-仅看此规格评价',
+      desc: '快速点击[仅看当前商品规格的评价]',
+      actionCd: 5000, // 防止想点举报点不了
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: '.activity.NewPageActivity',
+          matches:
+            '[text^="发表时间"] +2 [text="仅看当前规格的评价"][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/27209280',
+          exampleUrls: 'https://e.gkd.li/5e17d2de-bca9-4462-8276-7269b0ea5f49',
+        },
+      ],
+    },
+    {
+      key: 25,
+      name: '功能类-视频评论进入自动静音',
+      desc: '评论=>视频=>点击[静音]按钮',
+      actionMaximum: 1,
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: '.activity.NewPageMaskActivity',
+          matches:
+            '[desc="静音"][visibleToUser=true] < @[vid="pdd"][clickable=true] + [text^="@"]',
+          snapshotUrls: 'https://i.gkd.li/i/28312056',
+          exampleUrls: 'https://e.gkd.li/d584e0b4-6cf5-47a0-859a-7699da89ec39',
+        },
+      ],
+    },
+    {
+      key: 26,
+      name: '功能类-商品页视频自动静音',
+      desc: '商品详情=>点击播放视频=>点击[静音]',
+      fastQuery: true,
+      actionMaximum: 1,
+      rules: [
+        {
+          key: 0,
+          activityIds: '.activity.NewPageActivity',
+          matches:
+            '@[desc="静音"][clickable=true] <2 [childCount=3] < FrameLayout <2 ViewPager + [text^="1/"][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/28312697', // 商品详情页UI
+          exampleUrls: 'https://e.gkd.li/9bd17b81-9afe-4e59-98d8-2024abf760e5',
+        },
+        {
+          key: 1,
+          activityIds: '.goods.gallery.GoodsDetailGalleryActivity',
+          matches:
+            'LinearLayout[childCount=4] > @ImageView[clickable=true][width<66 && height<66][index=0] +2 SeekBar + [text^="00:"]',
+          snapshotUrls: 'https://i.gkd.li/i/28420002', // 点进视频后UI
+          exampleUrls: 'https://e.gkd.li/733ac4f0-7c2d-4a0e-80b3-6350ba229ddf',
         },
       ],
     },
