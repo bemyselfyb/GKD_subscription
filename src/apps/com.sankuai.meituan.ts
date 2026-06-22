@@ -5,6 +5,22 @@ export default defineGkdApp({
   name: '美团',
   groups: [
     {
+      key: -1,
+      name: '开屏广告',
+      fastQuery: true,
+      matchTime: 10000,
+      actionMaximum: 1,
+      resetMatch: 'app',
+      rules: [
+        {
+          key: 0,
+          matches: 'TextView[text*="跳过"][text.length<8][clickable=true]',
+          snapshotUrls: 'https://i.gkd.li/i/28997249',
+          excludeSnapshotUrls: 'https://i.gkd.li/i/17827264', // 用 TextView 排除
+        },
+      ],
+    },
+    {
       key: 1,
       name: '更新提示',
       fastQuery: true,
@@ -130,7 +146,7 @@ export default defineGkdApp({
           action: 'back',
           activityIds:
             'com.sankuai.waimai.bussiness.order.detail.WMOrderDetailActivity',
-          matches: '[id="com.sankuai.meituan:id/questionnaireTitle"]',
+          matches: '[vid="questionnaireTitle"]',
           snapshotUrls: 'https://i.gkd.li/i/13682336',
         },
       ],
@@ -206,14 +222,14 @@ export default defineGkdApp({
           key: 1,
           activityIds:
             'com.sankuai.waimai.business.page.homepage.TakeoutActivity',
-          matches: '[id="com.sankuai.meituan:id/location_layer_close"]',
+          matches: '[vid="location_layer_close"]',
           exampleUrls:
             'https://m.gkd.li/57941037/3071d3a4-f8ca-4c6f-8aa2-cf9573dbed3d',
           snapshotUrls: 'https://i.gkd.li/i/12910211',
         },
         {
           key: 2,
-          activityIds: 'com.sankuai.meituan.MPMainActivity',
+          activityIds: '.MPMainActivity',
           matches: '[text="定位服务尚未开启"] +3 TextView',
           exampleUrls:
             'https://m.gkd.li/57941037/3bb08a42-5d88-4f9d-8cbe-cb913e136ec6',
@@ -288,10 +304,8 @@ export default defineGkdApp({
           key: 0,
           activityIds:
             'com.sankuai.waimai.platform.machpro.container.WMMPActivity',
-          matches: [
-            '[text="商家已接单" || text="等待商家接单"][visibleToUser=true]',
-            '[text="完成"][visibleToUser=true]',
-          ],
+          matches:
+            '@[text="完成"] -n ViewGroup >(1,7) [text="商家已接单" || text="等待商家接单"]',
           snapshotUrls: [
             'https://i.gkd.li/i/14163717',
             'https://i.gkd.li/i/17158063',
@@ -303,8 +317,11 @@ export default defineGkdApp({
           activityIds:
             'com.meituan.android.hybridcashier.HybridCashierActivity',
           matches:
-            '[text="支付成功"] >5 @[visibleToUser=true][text="完成"] <<n [vid="mil_container"]',
-          snapshotUrls: 'https://i.gkd.li/i/14392284',
+            '[text="支付成功"] >(5,7) @[visibleToUser=true][text="完成"] <<n [vid="mil_container"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/14392284',
+            'https://i.gkd.li/i/26628762',
+          ],
         },
       ],
     },
@@ -321,6 +338,26 @@ export default defineGkdApp({
             '@ImageView[clickable=true][visibleToUser=true] + [text="正在讲解"]',
           exampleUrls: 'https://e.gkd.li/42b1d2c5-ca75-4a89-adca-9e5c4f489165',
           snapshotUrls: 'https://i.gkd.li/i/17182888',
+        },
+      ],
+    },
+    {
+      key: 14,
+      name: '全屏广告-下单后开通月付提示',
+      desc: '出现后-按[返回键]',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds:
+            'com.meituan.android.hybridcashier.HybridCashierActivity',
+          matches:
+            '@[text*="美团月付"][parent.childCount=6] <<n [childCount=2][getChild(1).text^="确认"] <<n [text="支付成功"] < WebView < [vid="mil_container"]',
+          action: 'back',
+          snapshotUrls: [
+            'https://i.gkd.li/i/27426053',
+            'https://i.gkd.li/i/28056764',
+          ],
+          exampleUrls: 'https://e.gkd.li/9f1b0006-c4c2-4234-9cea-94ee97f48ae3',
         },
       ],
     },
