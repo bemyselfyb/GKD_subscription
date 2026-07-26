@@ -3,6 +3,7 @@ import { defineGkdApp } from '@gkd-kit/define';
 export default defineGkdApp({
   id: 'com.xunmeng.pinduoduo',
   name: '拼多多',
+  // 根选择器模板:'@View[id="main"] <<2 WebView[text="拼多多"] <<3 FrameLayout[vid!=null] <2 ViewGroup <2 FrameLayout <<3 [id="android:id/content"]'
   groups: [
     {
       key: 0,
@@ -57,27 +58,28 @@ export default defineGkdApp({
             '.ui.activity.MainFrameActivity',
           ],
           excludeMatches:
-            '[text="我的订单" || text="聊天"][bottom<500][visibleToUser=true]',
+            '[text="我的订单" || text="聊天"][bottom<650][visibleToUser=true]',
           matches:
             '[text="开心收下" || text="去抢购" || text="立即抽免单" || text="去刮奖" || text="立即领取" || text="去领大额金币" || text="送你大额现金" || text*="红包助手" || text="刮刮卡发来的消息通知" || text="立即充值" || text="打款金额"][top>600][visibleToUser=true]',
           snapshotUrls: [
-            'https://i.gkd.li/i/13625441',
-            'https://i.gkd.li/i/13761182',
-            'https://i.gkd.li/i/13944165',
-            'https://i.gkd.li/i/14456101',
-            'https://i.gkd.li/i/14596990',
-            'https://i.gkd.li/i/14614135',
-            'https://i.gkd.li/i/15360330',
-            'https://i.gkd.li/i/15032649',
-            'https://i.gkd.li/i/15076322',
-            'https://i.gkd.li/i/17564786',
-            'https://i.gkd.li/i/17585645',
-            'https://i.gkd.li/i/17625608',
-            'https://i.gkd.li/i/18481318',
+            'https://i.gkd.li/i/13625441', //送你大额现金
+            'https://i.gkd.li/i/13761182', //开心收下
+            'https://i.gkd.li/i/13944165', //去领大额金币
+            'https://i.gkd.li/i/14456101', //去刮奖
+            'https://i.gkd.li/i/14596990', //立即领取
+            'https://i.gkd.li/i/14614135', //立即抽免单
+            'https://i.gkd.li/i/15360330', //开心收下
+            'https://i.gkd.li/i/15032649', //去抢购
+            'https://i.gkd.li/i/15076322', //去抢购
+            'https://i.gkd.li/i/17564786', //红包助手向你发起一笔打款 / 打款金额
+            'https://i.gkd.li/i/17585645', //来自红包助手
+            'https://i.gkd.li/i/17625608', //刮刮卡发来的消息通知
+            'https://i.gkd.li/i/18481318', //立即充值
           ],
           excludeSnapshotUrls: [
-            'https://i.gkd.li/i/23352586',
-            'https://i.gkd.li/i/23607429',
+            'https://i.gkd.li/i/23352586', // [text="我的订单"]
+            'https://i.gkd.li/i/23607429', // [text="聊天"]
+            'https://i.gkd.li/i/28929991', // [bottom<650]
           ],
         },
         {
@@ -201,9 +203,18 @@ export default defineGkdApp({
         {
           fastQuery: true,
           activityIds: '.activity.NewPageActivity',
-          matches: '[vid="iv_float_window_close"]',
-          exampleUrls: 'https://e.gkd.li/f81a45e4-09b4-498f-be72-ca84cdd0db83',
-          snapshotUrls: 'https://i.gkd.li/i/14549415',
+          anyMatches: [
+            '[vid="iv_float_window_close"]',
+            '@ImageView[desc="关闭"][clickable=true] - * ->n [desc="tronplayer_view"] <<2 [childCount=1] <<2 RelativeLayout[childCount=1] <n * < [id="android:id/content"]',
+          ],
+          snapshotUrls: [
+            'https://i.gkd.li/i/14549415',
+            'https://i.gkd.li/i/29378452', // 形式2
+          ],
+          exampleUrls: [
+            'https://e.gkd.li/f81a45e4-09b4-498f-be72-ca84cdd0db83',
+            'https://e.gkd.li/2fca1602-25f2-4ca4-b3cf-9a6fa33396af',
+          ],
         },
       ],
     },
@@ -279,6 +290,7 @@ export default defineGkdApp({
       key: 12,
       name: '全屏广告-下单后出现的弹窗',
       desc: '点击关闭',
+      fastQuery: true,
       rules: [
         {
           key: 0,
@@ -287,12 +299,13 @@ export default defineGkdApp({
             '.ui.activity.HomeActivity',
           ],
           action: 'clickCenter',
-          matches: 'Button[text="关闭弹窗" || desc="关闭弹窗"][clickable=true]',
+          matches:
+            '@Button[text="关闭弹窗" || desc="关闭弹窗"][clickable=true] <n View[childCount>1] <<(1,2) View[id="main"] <<2 WebView[text="拼多多"] <<3 FrameLayout[vid!=null] <2 ViewGroup <2 FrameLayout <<3 [id="android:id/content"]',
           snapshotUrls: [
+            'https://i.gkd.li/i/13308175', // 老快照无vid
             'https://i.gkd.li/i/13927594',
             'https://i.gkd.li/i/14434154',
             'https://i.gkd.li/i/14456017',
-            'https://i.gkd.li/i/13308175',
             'https://i.gkd.li/i/23256823',
           ],
         },
@@ -300,7 +313,6 @@ export default defineGkdApp({
           preKeys: [0],
           name: '二级全屏推荐',
           matchTime: 10000,
-          fastQuery: true,
           activityIds: '.activity.NewPageActivity',
           matches:
             '@LinearLayout[clickable=true][width<105 && height<99] + * > [text$="下单成功"][visibleToUser=true]',
@@ -409,24 +421,26 @@ export default defineGkdApp({
       name: '功能类-自动处方流程',
       desc: '自动点击处方流程到支付',
       fastQuery: true,
+      matchTime: 10000,
       activityIds: '.activity.NewPageActivity',
       rules: [
         {
           key: 0,
           name: '点击已确诊的疾病', // 否则无法继续
           actionMaximum: 1,
-          matches: '[text="选择已确诊的疾病"] + View > * > TextView[index=0]',
+          matches:
+            '@TextView[index=0] <<2 View - [text="选择已确诊的疾病"] <n [id="main"] < WebView[text!=null] <<3 FrameLayout <2 ViewGroup -2 FrameLayout >3 [text="购买处方药需填写用药信息"]',
           snapshotUrls: 'https://i.gkd.li/i/25639924',
-          excludeMatches: 'RelativeLayout > [text="请选择已确诊的疾病"]', // 排除匹配
-          excludeSnapshotUrls: 'https://i.gkd.li/i/25639813', // 无法点击继续
           exampleUrls: 'https://e.gkd.li/f92b5d13-da8a-4eb2-b981-66bdc12b9c1c',
         },
         {
           key: 1,
           name: '点击提交并开药',
           preKeys: [0],
+          actionCd: 800, // 等待信息加载完成
           matches:
-            '@[text="提交并开药"][clickable=true][visibleToUser=true] -n [index=0] < [id="main"] < [text^="购买处方药"] <<n [id="android:id/content"]',
+            '@Button[text="提交并开药"][clickable=true][visibleToUser=true] <n [id="main"] < WebView[text!=null] <<3 FrameLayout <2 ViewGroup -2 FrameLayout >3 [text="购买处方药需填写用药信息"]',
+          action: 'clickCenter', // 不响应无障碍事件
           snapshotUrls: 'https://i.gkd.li/i/25639924',
         },
         {
@@ -442,7 +456,7 @@ export default defineGkdApp({
         {
           name: '点击立即支付',
           preKeys: [2],
-          matchDelay: 2600, // 等待处方下来
+          matchDelay: 3000, // 等待处方下来(时间较长?)
           matches: '@[clickable=true] >2 [text="立即支付"][visibleToUser=true]',
           snapshotUrls: 'https://i.gkd.li/i/25640017',
           exampleUrls: 'https://e.gkd.li/31396caf-8a11-484e-9ece-c273a05939ab',
@@ -451,18 +465,42 @@ export default defineGkdApp({
     },
     {
       key: 23,
-      name: '功能类-订单详页-展开更多',
+      name: '功能类-展开更多',
       desc: '自动展开更多信息',
       activityIds: '.activity.NewPageActivity',
       rules: [
         {
-          action: 'clickCenter',
-          anyMatches: [
-            'Button[text="查看更多订单信息"]', // 不响应无障碍事件
-            'View[text^="收货人信息"] > [text="展开"][visibleToUser=true]',
-          ],
+          key: 0,
+          name: '通用[展开]_fastQ',
+          fastQuery: true,
+          action: 'clickCenter', // 不响应无障碍事件
+          matches: '[text="展开"][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/29405868',
+        },
+        {
+          key: 1,
+          name: '[查看更多订单信息]',
+          matches: 'Button[text="查看更多订单信息"]',
+          action: 'clickCenter', // 不响应无障碍事件
           snapshotUrls: 'https://i.gkd.li/i/27208567',
           exampleUrls: 'https://e.gkd.li/fb06904f-b996-49a8-8db3-3e44059d704d',
+        },
+        {
+          key: 2,
+          name: '订单页',
+          action: 'clickCenter', // 不响应无障碍事件
+          matches:
+            '@[text="展开"] <<3 View <n [id="main"] <<2 WebView[text!=null] <<3 FrameLayout <2 ViewGroup -2 FrameLayout >3 [text="交易成功"]',
+          snapshotUrls: 'https://i.gkd.li/i/27208567', // [text="展开"]
+        },
+        {
+          key: 3,
+          name: '商品评论',
+          fastQuery: true,
+          activityIds: '.activity.NewPageActivity',
+          matches:
+            '@[desc="展开"][clickable=true] - FrameLayout > ViewGroup[vid="pdd"][childCount>5] >2 [text^="全部("]',
+          snapshotUrls: 'https://i.gkd.li/i/29604643',
         },
       ],
     },
@@ -520,6 +558,116 @@ export default defineGkdApp({
             'LinearLayout[childCount=4] > @ImageView[clickable=true][width<66 && height<66][index=0] +2 SeekBar + [text^="00:"]',
           snapshotUrls: 'https://i.gkd.li/i/28420002', // 点进视频后UI
           exampleUrls: 'https://e.gkd.li/733ac4f0-7c2d-4a0e-80b3-6350ba229ddf',
+        },
+      ],
+    },
+    {
+      key: 27,
+      name: '功能类-隐藏[搜索发现]',
+      desc: '自动隐藏搜索页中[搜索发现]',
+      actionMaximum: 1,
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: '.activity.NewPageActivity',
+          matches:
+            '@[desc="隐藏搜索发现"][clickable=true] - [text="搜索发现"][visibleToUser=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/29376727', // 隐藏前
+            'https://i.gkd.li/i/29376724', // 隐藏后
+          ],
+          exampleUrls: 'https://e.gkd.li/3f03d2c0-9c40-43fe-9568-9eee4471e806',
+        },
+      ],
+    },
+    {
+      key: 28,
+      name: '其他-跳过登录后绑定手机号',
+      desc: '登陆成功 ->请绑定手机号 ->跳过',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: '.activity.NewPageActivity',
+          matches:
+            '[text="登录成功，请绑定手机号"] <<2 * <2 * -> @[text="跳过"] <<2 [id="bindingPage"] < [id="main"] <<4 [vid="pdd"] <2 ViewGroup <<2 [id="android:id/content"]',
+          snapshotUrls: 'https://i.gkd.li/i/29377418',
+          exampleUrls: 'https://e.gkd.li/5951f8ab-00e5-4e0d-9777-56b24a5a2dd1',
+        },
+      ],
+    },
+    {
+      key: 29,
+      name: '权限提示-相机权限',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds:
+            '.permission.scene_manager.ScenePermissionRequestActivity',
+          matches:
+            '[text$="允许拼多多访问你的相机"][visibleToUser=true] < LinearLayout +2 LinearLayout > [text="取消"][clickable=true]',
+          snapshotUrls: 'https://i.gkd.li/i/29404575',
+          exampleUrls: 'https://e.gkd.li/40505e06-9e36-45b8-a9fc-14a1ca25fea5',
+        },
+      ],
+    },
+    {
+      key: 30,
+      name: '其他-退出评价跳过二次确认',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: '.activity.NewPageActivity',
+          matches:
+            '[text^="此次评价未完成"][visibleToUser=true] < [childCount=1] +2 LinearLayout[childCount=3] > [text="退出"][clickable=true]',
+          snapshotUrls: 'https://i.gkd.li/i/29405754',
+          exampleUrls: 'https://e.gkd.li/1911b664-06cd-4594-8762-190bd4aa8eb1',
+        },
+      ],
+    },
+    {
+      key: 31,
+      name: '功能类-下单后一键取消收藏',
+      desc: '一键取消收藏购刚买的商品',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: '.activity.NewPageMaskActivity',
+          matches:
+            '@[text="一键取消收藏以上商品"][visibleToUser=true] < View[childCount=2] - View[childCount=5] <<(1,2) View[id="main"] <<2 WebView[text="拼多多"] <<3 FrameLayout[vid!=null] <2 ViewGroup <2 FrameLayout <<3 [id="android:id/content"]',
+          snapshotUrls: 'https://i.gkd.li/i/29681036',
+          exampleUrls: 'https://e.gkd.li/d2a316ea-24f1-4b0b-9768-294835cbe2c7',
+        },
+      ],
+    },
+    {
+      key: 32,
+      name: '功能类-百亿补贴自动[打卡]',
+      desc: '点击[打卡]',
+      rules: [
+        {
+          fastQuery: true,
+          actionMaximum: 1,
+          resetMatch: 'app',
+          activityIds: '.activity.NewPageActivity',
+          matches: [
+            '[vid="tv_title"][text="百亿补贴会员"]',
+            '[id=null][text="打卡"][visibleToUser=true]', //慢查
+          ],
+          exampleUrls: 'https://e.gkd.li/0a6edc27-5a14-4963-8f2c-47419f107bd1',
+          snapshotUrls: 'https://i.gkd.li/i/30271889',
+        },
+      ],
+    },
+    {
+      key: 33,
+      name: '功能类-自动加入抽福袋',
+      desc: '点击[立即加入抽福袋]',
+      rules: [
+        {
+          activityIds: '.activity.NewPageActivity',
+          matches: '[id=null][text="立即加入抽福袋"][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/30295232',
+          exampleUrls: 'https://e.gkd.li/a057d535-db79-4faa-9c8f-69069dee91f6',
         },
       ],
     },
