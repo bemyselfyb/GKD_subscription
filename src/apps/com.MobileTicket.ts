@@ -24,5 +24,18 @@ export default defineGkdApp({
         },
       ],
     },
+    {
+      key: 1,
+      name: '局部广告-下方横幅广告',
+      desc: 'x掉',
+      rules: [
+        {
+          activityIds: '.ui.activity.MainActivity',
+          matches: '[clickable=true][vid="iv_tip_close"][desc^="关闭"]',
+          snapshotUrls: 'https://i.gkd.li/i/25822675',
+          exampleUrls: 'https://e.gkd.li/4e28cdee-3c01-4e1d-93c9-5d82e3f9a808',
+        },
+      ],
+    },
   ],
 });
