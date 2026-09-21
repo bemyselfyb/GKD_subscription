@@ -31,8 +31,7 @@ export default defineGkdApp({
         {
           name: '收藏帖子后底部推荐关注卡片',
           fastQuery: true,
-          activityIds:
-            'com.max.xiaoheihe.module.bbs.post.ui.activitys.WebNewsPostPageActivity',
+          activityIds: '.module.bbs.post.ui.activitys.WebNewsPostPageActivity',
           matches: '[vid="iv_notify_close"]',
           exampleUrls:
             'https://m.gkd.li/57941037/b7c25b6e-cc77-4bcc-a477-23b3de74c61f',
@@ -42,21 +41,46 @@ export default defineGkdApp({
     },
     {
       key: 3,
-      name: '功能类-自动点击查看原图',
+      name: '功能类-自动[查看原图]',
+      desc: '点击[查看原图]',
       rules: [
         {
           fastQuery: true,
           activityIds: [
             '.module.bbs.post.ui.activitys.WebNewsPostPageActivity',
             '.module.bbs.post.ui.activitys.PicturePostPageActivity',
+            '.module.bbs.post.ui.activitys.v2.PicturePostPageActivityV2',
+            '.module.bbs.post.ui.activitys.v2.WebNewsPostPageActivityV2',
           ],
-          matches: '[vid="tv_original"][visibleToUser=true]',
+          matches: '[vid="tv_original"][clickable=true]',
           exampleUrls: 'https://e.gkd.li/f7222b21-7037-4614-95ab-cff19ee15d38',
           snapshotUrls: [
             'https://i.gkd.li/i/16646832',
             'https://i.gkd.li/i/17574462',
+            'https://i.gkd.li/i/25336815',
+            'https://i.gkd.li/i/30749472',
           ],
           excludeSnapshotUrls: 'https://i.gkd.li/i/22377026',
+        },
+      ],
+    },
+    {
+      key: 4,
+      name: '功能类-自动隐藏cy评论',
+      desc: '进入帖子点击一次[Cy]按钮',
+      rules: [
+        {
+          fastQuery: true,
+          actionMaximum: 1,
+          activityIds: [
+            '.module.bbs.post.ui.activitys.v2.WebNewsPostPageActivityV2',
+            '.module.bbs.post.ui.activitys.v2.PicturePostPageActivityV2',
+          ],
+          matches: '[vid="tb_cy_filter"][text="关闭"][visibleToUser=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/31803161',
+            'https://i.gkd.li/i/31818275',
+          ],
         },
       ],
     },
