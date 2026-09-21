@@ -7,46 +7,59 @@ export default defineGkdApp({
     {
       key: -1,
       name: '开屏广告',
+      fastQuery: true,
       matchTime: 10000,
-      actionMaximum: 1,
       resetMatch: 'app',
-      actionMaximumKey: 0,
       priorityTime: 10000,
       excludeActivityIds: [
-        '.view.search.', // 在搜索页面禁用
+        // '.view.search.', // 在搜索页面禁用
         '.view.feed.', // 在动态页面禁用
         '.view.node.DynamicNodePageActivity',
       ],
       rules: [
         {
           key: 0,
-          fastQuery: true,
-          anyMatches: [
-            '@View[text=null][clickable=true][childCount=0][visibleToUser=true][width<200&&height<200] +(1,2) TextView[index=parent.childCount.minus(1)][childCount=0] <n FrameLayout[childCount>2][text=null][desc=null] >(n+6) [text*="第三方应用" || text*="扭动手机" || text*="点击或上滑" || text*="省钱好物" || text*="扭一扭"][visibleToUser=true]',
-            'FrameLayout > FrameLayout[childCount>2][text=null][desc=null] > @View[text=null][clickable=true][childCount=0][visibleToUser=true][width<200&&height<200] +(1,2) TextView[index=parent.childCount.minus(1)][childCount=0][visibleToUser=true]',
-          ],
+          actionMaximum: 1,
+          matches:
+            'TextView - @View[clickable=true][width<200] <(2,3) FrameLayout <2 FrameLayout < FrameLayout < [vid="ad_container"]',
+          // matches: '@View[text=null][clickable=true][childCount=0][visibleToUser=true][width<200&&height<200] +(1,2) TextView[index=parent.childCount.minus(1)][childCount=0] <n FrameLayout[childCount>2][text=null][desc=null] >(n+6) [text*="第三方应用" || text*="扭动手机" || text*="点击或上滑" || text*="省钱好物" || text*="扭一扭" || text*="Shake"]',
           snapshotUrls: [
-            'https://i.gkd.li/i/12503773',
             'https://i.gkd.li/i/13247610',
             'https://i.gkd.li/i/13264779',
             'https://i.gkd.li/i/13826359',
             'https://i.gkd.li/i/13827095',
+            'https://i.gkd.li/i/30529874',
           ],
         },
         {
           key: 1,
-          fastQuery: true,
+          actionCd: 300, //可能需点击多次,让二次触发快点
+          actionMaximum: 5, // issues#252
+          excludeMatches: '[text*="搜索"]',
           matches:
-            '[!(id="com.coolapk.market:id/item_view") && !(vid="card_view")] > [text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
+            '[!(vid="item_view") && !(vid="card_view")] > [text*="跳过" || text*="Skip"][text.length<10][width<500 && height<300][visibleToUser=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/12917990',
             'https://i.gkd.li/i/13211392',
             'https://i.gkd.li/i/23097140',
+            'https://i.gkd.li/i/25498455', //Eng
+            'https://i.gkd.li/i/26328668', // .view.splash.SplashAdActivity
           ],
           excludeSnapshotUrls: [
-            'https://i.gkd.li/i/13247733',
+            'https://i.gkd.li/i/13247733', //搜索页 .view.splash.SplashAdActivity
             'https://i.gkd.li/i/13296816',
             'https://i.gkd.li/i/18245546',
+          ],
+        },
+        {
+          key: 2,
+          actionMaximum: 1,
+          actionMaximumKey: 0,
+          matches:
+            '@ImageView[childCount=0] < ViewGroup < ViewGroup +(2,3) ViewGroup >2 [text="广告"][visibleToUser=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/27078867',
+            'https://i.gkd.li/i/27380329',
           ],
         },
       ],
@@ -185,6 +198,49 @@ export default defineGkdApp({
             '@[desc="关闭"] <<n [vid="item_view"] <<n [vid="to_native_ad_view"][visibleToUser=true]',
           exampleUrls: 'https://e.gkd.li/efd366d9-1c66-4c35-b164-6f91a623e2f2',
           snapshotUrls: 'https://i.gkd.li/i/19643150',
+        },
+      ],
+    },
+    {
+      key: 6,
+      name: '功能类-自动保存原图',
+      desc: '长按图片->点击[保存原图]',
+      fastQuery: true,
+      rules: [
+        {
+          key: 1,
+          activityIds: [
+            '.view.photo.PhotoViewActivity',
+            '.view.wallpaper.coolpic.CoolPicDetailActivity',
+          ],
+          matches: '@[clickable=true] > [text="保存原图"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/25621281',
+            'https://i.gkd.li/i/25621360',
+          ],
+          exampleUrls: 'https://e.gkd.li/d62f40f9-51ca-4059-9217-6d93e080db8b',
+        },
+        {
+          key: 2,
+          activityIds: '.view.photo.PhotoViewV16Activity',
+          matches:
+            '[text="保存原图"] < @[clickable=true] <n View[childCount>2] < View < View < View < ViewGroup < [id="android:id/content"]',
+          snapshotUrls: 'https://i.gkd.li/i/28377623',
+        },
+      ],
+    },
+    {
+      key: 7,
+      name: '功能类-消息已读自动[确定]',
+      desc: '点击[确定]',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: '.view.notification.v18.NotificationV18Activity',
+          matches:
+            '[text="确定"] < @[clickable=true] <6 View[getChild(0).text$="已读"] < View < ComposeView < [id="android:id/content"]',
+          snapshotUrls: 'https://i.gkd.li/i/30532352',
+          exampleUrls: 'https://e.gkd.li/dbf91283-a342-416e-a009-5b7e67301c77',
         },
       ],
     },
