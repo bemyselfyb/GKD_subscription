@@ -154,18 +154,6 @@ export default defineGkdApp({
           exampleUrls: 'https://e.gkd.li/c29c5647-e2ee-460f-87aa-8717779645ec',
           snapshotUrls: 'https://i.gkd.li/i/23621776',
         },
-        {
-          key: 8,
-          name: '坐标点击[关闭]',
-          activityIds: '.reader.ui.ReaderActivity',
-          position: {
-            left: 'width * 0.9141',
-            top: 'width * 0.0687',
-          },
-          matches:
-            '@ViewGroup[visibleToUser=true] < [childCount=2] - [childCount=1] >6 [vid="ttlive_player_render_view"]',
-          snapshotUrls: 'https://i.gkd.li/i/27706770',
-        },
       ],
     },
     {
@@ -190,7 +178,7 @@ export default defineGkdApp({
         {
           key: 0,
           matches:
-            '@[(name$="ImageView" || getChild(0).name$="ImageView") && desc!="back_unfold"][clickable=true][visibleToUser=true][width<102 && height<102] <n [childCount>1] >(2,3) [text*="查看" || text$="优惠" || text^="立即" || text^="马上" || text*="参与" || text*="参加" || text*="免费" || (text*="领" && text*="券") || (text*="返" && text*="金币")][text.length<10]',
+            '@[(name$="ImageView" || getChild(0).name$="ImageView") && desc!="back_unfold"][clickable=true][visibleToUser=true][width<102 && height<102] <n [childCount>1] >(2,3) [text*="查看" || text$="优惠" || text^="立即" || text^="马上" || text*="参与" || text*="参加" || text*="免费" || (text*="领" && text*="券") || (text*="返" && text*="金币")][text!="查看下载"][text.length<10]',
           snapshotUrls: [
             'https://i.gkd.li/i/12908734', // 查看详情
             'https://i.gkd.li/i/18138903', // 立享优惠
@@ -207,6 +195,7 @@ export default defineGkdApp({
           excludeSnapshotUrls: [
             'https://i.gkd.li/i/28821485', // 用 [name$="ImageView" || getChild(0).name$="ImageView"][visibleToUser=false] 排除
             'https://i.gkd.li/i/31111672', // 添加 desc!="back_unfold" 条件排除
+            'https://i.gkd.li/i/32085481', // 添加 [text!="查看下载"] 条件排除
           ],
           exampleUrls: 'https://e.gkd.li/3de0d5d9-0c02-4fe7-b5e8-b9fdb6688f8e',
         },
@@ -239,12 +228,16 @@ export default defineGkdApp({
           key: 3,
           name: '坐标点击[反馈]',
           position: {
-            top: 'width * 0.0617',
-            left: 'width * 0.7885',
+            left: 'width * 0.77',
+            top: 'height * 0.64',
           },
           matches:
-            '@ViewGroup[visibleToUser=true][height<150][width=prev.width] < [childCount=2] <3 FrameLayout[childCount=3] >7 [vid="ttlive_player_render_view"]',
-          snapshotUrls: 'https://i.gkd.li/i/28834344',
+            '@ViewGroup[visibleToUser=true][height<150][width=prev.width] < [childCount=2] <(2,3) FrameLayout[childCount<4] >7 [vid="ttlive_player_render_view"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/27706770',
+            'https://i.gkd.li/i/28834344',
+            'https://i.gkd.li/i/32435385',
+          ],
           exampleUrls: 'https://e.gkd.li/aef38288-d84b-4e13-8161-ebebc27b822b',
         },
         {
@@ -279,6 +272,7 @@ export default defineGkdApp({
             'https://i.gkd.li/i/24128392', //不感兴趣
             'https://i.gkd.li/i/24189605', //关闭此广告
             'https://i.gkd.li/i/14540281', //关闭此条广告
+            'https://i.gkd.li/i/32435735', //不感兴趣
           ],
           exampleUrls: 'https://e.gkd.li/e04bcb90-ad61-43d9-97e9-b4f6e3873320',
         },
