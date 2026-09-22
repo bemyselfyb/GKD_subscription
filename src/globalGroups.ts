@@ -25,7 +25,7 @@ export default defineGkdGlobalGroups([
         key: 0,
         // 防止误触
         excludeMatches:
-          '([text*="搜索" || text="历史记录" || text$="在搜"][text.length>3 && text.length<7][visibleToUser=true]) || ([text="Submit" || text*="阅读并同意" || text="书签" || text="NEXT"][visibleToUser=true]) || ([text$="设置" || text$="选好了" || text^="下一步" || text^="完成" || text*="跳过片"][text.length<10][visibleToUser=true]) || ([text^="选择"][text*="偏好" || text*="兴趣" || text*="喜好"][text.length<10][visibleToUser=true])',
+          '([text="Submit" || text="书签" || text="NEXT" || text="覆盖" || text*="阅读并同意" || text="跳过空白"][visibleToUser=true]) || ([text*="搜索" || text="历史记录" || text$="在搜"][text.length>3 && text.length<7][visibleToUser=true]) || ([text$="设置" || text*="跳过片"][text.length<10][visibleToUser=true]) || ([text^="选择"][text*="偏好" || text*="兴趣" || text*="喜好" || text*="行业"][text.length<10][visibleToUser=true])',
         anyMatches: [
           '[text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
           '@[name$="View" || name$="LinearLayout"][clickable=true][childCount<2][width<300 && height<200] - [text="互动广告"][visibleToUser=true]',
@@ -43,28 +43,32 @@ export default defineGkdGlobalGroups([
           'https://i.gkd.li/i/24766641', // height<300
 
           // 避免被excludeMatches匹配
-          'https://i.gkd.li/i/24330969',
-          'https://i.gkd.li/i/24541384',
-          'https://i.gkd.li/i/24588777',
+          'https://i.gkd.li/i/24330969', // [text="搜索运单或服务"] 加 text.length<7 后被排除
+          'https://i.gkd.li/i/24541384', // [text="设置"] 加 [visibleToUser=true] 后被排除
+          'https://i.gkd.li/i/24588777', // 原先 [text*="隐私协议"] 会匹配,已删除
         ],
         excludeSnapshotUrls: [
           // 避免误触
+          'https://i.gkd.li/i/19952277', // text="Submit"
+          'https://i.gkd.li/i/23122415', // text="书签"
+          'https://i.gkd.li/i/23225609', // text="NEXT"
+          'https://i.gkd.li/i/27801562', // text="覆盖"
+          'https://i.gkd.li/i/22634992', // text*="阅读并同意" , (text.length=40)
+          'https://i.gkd.li/i/32416687', // text="跳过空白"
+          'https://i.gkd.li/i/20946730', // text$="设置" text*="跳过片"
+          'https://i.gkd.li/i/23741801', // text$="设置"
+          'https://i.gkd.li/i/23741779', // text$="设置"
+          'https://i.gkd.li/i/23051921', // [text^="选择"]  偏好
+          'https://i.gkd.li/i/23742770', // [text^="选择"]  兴趣
+          'https://i.gkd.li/i/23743049', // [text^="选择"]  喜好
+          'https://i.gkd.li/i/23052289', // [text^="选择"]  行业
+
+          // anyMatches 中的排除
           'https://i.gkd.li/i/15079224', // !(text*="退出")
           'https://i.gkd.li/i/17108010', // !(text="帮助")
           'https://i.gkd.li/i/18265000', // !(text="取消")
-          'https://i.gkd.li/i/19952277', // text="Submit"
-          'https://i.gkd.li/i/20946730', // text$="设置"
           'https://i.gkd.li/i/20949002', // vid!~="(?is).*video.*"
           'https://i.gkd.li/i/21617520', // text!*="视频"
-          'https://i.gkd.li/i/22634992', // text$="登录" text*="阅读并同意"
-          'https://i.gkd.li/i/23051921', // [text^="选择"]
-          'https://i.gkd.li/i/23742770', // [text^="选择"]
-          'https://i.gkd.li/i/23743049', // [text^="选择"]
-          'https://i.gkd.li/i/23052289', // text="选好了"
-          'https://i.gkd.li/i/23122415', // text="书签"
-          'https://i.gkd.li/i/23225609', // text="NEXT"
-          'https://i.gkd.li/i/23741801', // text^="下一步" text$="设置"
-          'https://i.gkd.li/i/23741779', // text^="完成" text$="设置"
           'https://i.gkd.li/i/25039297', // text*="跳过片"、text!*="片头"、text!*="片尾"、vid!~="(?is).*head.*"、vid!~="(?is).*tail.*"
         ],
       },
@@ -97,6 +101,7 @@ export default defineGkdGlobalGroups([
     order: UPDATE_PROMPT_ORDER,
     fastQuery: true,
     matchTime: 10000,
+    forcedTime: 10000,
     actionMaximum: 1,
     resetMatch: 'app',
     disableIfAppGroupMatch: '更新提示',
@@ -104,25 +109,31 @@ export default defineGkdGlobalGroups([
       {
         key: 0,
         excludeMatches:
-          '([text*="全部"][text*="更新" || text*="忽略"][text.length<7][visibleToUser=true]) || ([text^="继续" || text^="仍然" || text*="权限"][text.length<6][visibleToUser=true]) || ([text*="来源"][visibleToUser=true])',
+          '([text*="全部"][text*="更新" || text*="忽略"][text.length<7][visibleToUser=true]) || ([text^="继续" || text^="仍然" || text*="权限"][text.length<6][visibleToUser=true]) || ([text*="来源"][visibleToUser=true])', //0️⃣
         matches: [
-          '[text*="内测" || text*="测试版" || text*="新版" || text*="更新" || text*="升级" || text*="体验" || text*="內測" || text*="測試版" || text*="升級" || text*="體驗" || text*="Update" || text*="Upgrade" || text*="Experience"][text!*="自动" && text!*="自動" && text!*="成功" && text!*="失败" && text!*="失敗" && text!*="检查更新" && text!*="检测更新" && text!*="卸载"][childCount=0][visibleToUser=true]',
-          '[text*="更新" || text*="下载" || text*="安装" || text*="升级" || text*="查看" || text*="体验" || text*="确定" || text*="确认" || text*="应用市场"][text.length<6][childCount=0][visibleToUser=true]',
-          '([text*="不再提醒" || text$="再说" || text$="拒绝" || text$="再想想" || text*="再看看" || text^="忽略" || text^="暂不" || text^="放弃" || text^="取消" || text$="不要" || text$="再說" || text$="暫不" || text$="拒絕" || text*="稍后" || text^="关闭" || text$="Later" || text^="Ignore" || text^="Not now" || text^="Cancel"][!(text*="取消"&&text*="忽略")][text.length<6][childCount=0][visibleToUser=true]) || ([vid="closeIv" || vid="iv_close" || vid="iv_cancel" || vid="close" || vid="Close" || vid="img_close" || vid="btn_close" || vid="ivCancel" || vid="tvCancel" || vid="cancel" || vid="Cancel" || vid="ivClose" || vid="imgClose" || vid="iv_negative" || vid="update_close_icon"][childCount=0][visibleToUser=true])',
+          '[text*="内测" || text*="测试版" || text*="新版" || text*="更新" || text*="升级" || text*="体验" || text*="內測" || text*="測試版" || text*="升級" || text*="體驗" || text*="Update" || text*="Upgrade" || text*="Experience"][text!*="自动" && text!*="自動" && text!*="成功" && text!*="失败" && text!*="失敗" && text!*="检查更新" && text!*="检测更新" && text!*="卸载" && name!$="EditText"][childCount=0][visibleToUser=true]', //1️⃣
+          '[text*="更新" || text*="下载" || text*="安装" || text*="升级" || text*="查看" || text*="体验" || text*="确定" || text*="确认" || text*="应用市场"][text.length<6][childCount=0][visibleToUser=true]', //2️⃣
+          '([text*="不再提醒" || text$="再说" || text$="拒绝" || text$="再想想" || text*="再看看" || text^="忽略" || text^="暂不" || text^="放弃" || text^="取消" || text$="不要" || text$="再說" || text$="暫不" || text$="拒絕" || text*="稍后" || text^="关闭" || text$="Later" || text^="Ignore" || text^="Not now" || text^="Cancel"][!(text*="取消"&&text*="忽略")][text.length<6][childCount=0][visibleToUser=true]) || ([vid="closeIv" || vid="iv_close" || vid="iv_cancel" || vid="close" || vid="Close" || vid="img_close" || vid="btn_close" || vid="ivCancel" || vid="tvCancel" || vid="cancel" || vid="Cancel" || vid="ivClose" || vid="imgClose" || vid="iv_negative" || vid="update_close_icon" || vid="dialog_close" || vid="im_dismiss"][childCount=0][visibleToUser=true])', //3️⃣
         ],
-        snapshotUrls: 'https://i.gkd.li/i/24158267', // text*="应用市场"
+        snapshotUrls: [
+          'https://i.gkd.li/i/24158267', // text*="应用市场"
+          'https://i.gkd.li/i/27428213', // vid="dialog_close"
+          'https://i.gkd.li/i/27470927', // vid="im_dismiss"
+          'https://i.gkd.li/i/30968619', // OPPO天气
+        ],
         excludeSnapshotUrls: [
-          // 避免误触
-          'https://i.gkd.li/i/17710149', // text!*="卸载"
-          'https://i.gkd.li/i/19605413', // [!(text*="取消"&&text*="忽略")][text.length<6]
-          'https://i.gkd.li/i/19918544',
-          'https://i.gkd.li/i/20033908',
+          // 避免误触 (个别快照的appID已在全局更新提示黑名单)
+          'https://i.gkd.li/i/17710149', //1️⃣  text!*="卸载"
+          'https://i.gkd.li/i/19605413', //0️⃣3️⃣  [!(text*="取消"&&text*="忽略")][text.length<6]
+          'https://i.gkd.li/i/19918544', //0️⃣3️⃣  [text.length<6]
+          'https://i.gkd.li/i/20033908', //0️⃣
+          'https://i.gkd.li/i/27942482', //1️⃣  name!$="EditText"   非输入框
 
           // [text^="继续" || text^="仍然"][text.length<6][visibleToUser=true]
-          'https://i.gkd.li/i/16487278',
-          'https://i.gkd.li/i/16487282',
-          'https://i.gkd.li/i/16550275',
-          'https://i.gkd.li/i/20053957',
+          'https://i.gkd.li/i/16487278', //0️⃣,已不符合1️⃣
+          'https://i.gkd.li/i/16487282', //0️⃣
+          'https://i.gkd.li/i/16550275', //0️⃣,已不符合1️⃣3️⃣
+          'https://i.gkd.li/i/20053957', //0️⃣
         ],
       },
     ],
@@ -139,6 +150,7 @@ export default defineGkdGlobalGroups([
     order: YOUTH_MODE_ORDER,
     fastQuery: true,
     matchTime: 10000,
+    forcedTime: 10000,
     actionMaximum: 1,
     resetMatch: 'app',
     disableIfAppGroupMatch: '青少年模式',
@@ -147,7 +159,11 @@ export default defineGkdGlobalGroups([
         key: 0,
         matches: [
           '[text*="青少年" || text*="未成年" || text*="儿童"][text*="模式" || text*="守护"][text.length<15][childCount=0][visibleToUser=true]',
-          '[text*="知道了" || text*="我已知晓" || text*="已满" || text*="不再提醒"][text.length<8][childCount=0][visibleToUser=true]',
+          '[text*="知道了" || text*="我已知晓" || text*="已满" || text*="不再提" || text="关闭"][text.length<8][childCount=0][visibleToUser=true]',
+        ],
+        snapshotUrls: [
+          'https://i.gkd.li/i/23427881', // 关闭
+          'https://i.gkd.li/i/27382640', // 不再提示 (不是 "不再提醒")
         ],
       },
     ],
