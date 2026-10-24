@@ -32,8 +32,7 @@ export default defineGkdApp({
         {
           key: 2,
           fastQuery: true,
-          activityIds:
-            'com.cainiao.wireless.homepage.view.activity.HomePageActivity',
+          activityIds: '.homepage.view.activity.HomePageActivity',
           matches:
             'View[clickable=true] > @[text="关闭"] + [visibleToUser=true][text="活动"] <<n [vid="browser_fragment_layout"]',
           snapshotUrls: 'https://i.gkd.li/i/14033859',
@@ -41,16 +40,14 @@ export default defineGkdApp({
         {
           key: 3,
           fastQuery: true,
-          activityIds:
-            'com.cainiao.wireless.homepage.view.activity.HomePageActivity',
+          activityIds: '.homepage.view.activity.HomePageActivity',
           matches: '[vid="dialog_full_image_close"]',
           snapshotUrls: 'https://i.gkd.li/i/13842492',
         },
         {
           key: 4,
           fastQuery: true,
-          activityIds:
-            'com.cainiao.wireless.homepage.view.activity.HomePageActivity',
+          activityIds: '.homepage.view.activity.HomePageActivity',
           matches:
             '@[text="关闭"] + [visibleToUser=true][text="活动"] <<n [vid="browser_fragment_layout"]',
           snapshotUrls: 'https://i.gkd.li/i/14033859',
@@ -83,6 +80,15 @@ export default defineGkdApp({
             'Image[childCount=0][width<100 && height<100] < @View[clickable=true][childCount=1] - Image[childCount=0][text="超时享"] <<n [vid="browser_fragment_layout"]',
           snapshotUrls: 'https://i.gkd.li/i/24099845',
         },
+        {
+          key: 8,
+          fastQuery: true,
+          activityIds:
+            'com.taobao.cainiao.logistic.ui.view.LogisticDetailActivity',
+          matches:
+            '@Image[clickable=true][width<100 && height<100] +3 * > [childCount=0][text="开心收下"] <<n [vid="browser_fragment_layout"]',
+          snapshotUrls: 'https://i.gkd.li/i/28173171',
+        },
       ],
     },
     {
@@ -107,8 +113,7 @@ export default defineGkdApp({
         {
           key: 2,
           fastQuery: true,
-          activityIds:
-            'com.cainiao.wireless.homepage.view.activity.HomePageActivity',
+          activityIds: '.homepage.view.activity.HomePageActivity',
           matches:
             'FrameLayout[childCount=8] > @FrameLayout[clickable=true][childCount=0][text=null] + ImageView[childCount=0][text=null] <<n [vid="layout_root"]',
           snapshotUrls: [
@@ -119,8 +124,7 @@ export default defineGkdApp({
         {
           key: 3,
           fastQuery: true,
-          activityIds:
-            'com.cainiao.wireless.homepage.view.activity.HomePageActivity',
+          activityIds: '.homepage.view.activity.HomePageActivity',
           matches: '[vid="home_task_action_close"]',
           snapshotUrls: 'https://i.gkd.li/i/16024305',
         },
@@ -149,7 +153,7 @@ export default defineGkdApp({
       actionMaximum: 1,
       resetMatch: 'app',
       fastQuery: true,
-      rules: '[id="com.cainiao.wireless:id/gg_dialog_base_close"]',
+      rules: '[vid="gg_dialog_base_close"]',
       snapshotUrls: 'https://i.gkd.li/i/13068573',
     },
     {
@@ -171,8 +175,7 @@ export default defineGkdApp({
       rules: [
         {
           fastQuery: true,
-          activityIds:
-            'com.cainiao.wireless.homepage.view.activity.HomePageActivity',
+          activityIds: '.homepage.view.activity.HomePageActivity',
           matches: '@[text="立即查看"] < * - * >2 [text="您是否要查询包裹"]',
           exampleUrls:
             'https://m.gkd.li/57941037/eb48e137-66c3-4777-b65e-8f4f6b3bc4ee',
@@ -201,10 +204,23 @@ export default defineGkdApp({
       rules: [
         {
           fastQuery: true,
-          activityIds:
-            'com.cainiao.wireless.homepage.view.activity.HomePageActivity',
+          activityIds: '.homepage.view.activity.HomePageActivity',
           matches: ['[text^="好友代取"]', '[text="下次再说"][clickable=true]'],
           snapshotUrls: 'https://i.gkd.li/i/23787455',
+        },
+      ],
+    },
+    {
+      key: 12,
+      name: '局部广告-超时享服务',
+      desc: 'x掉',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: '.homepage.view.activity.HomePageActivity',
+          matches:
+            '[desc^="激活超时享服务"] -2 @[clickable=true] < FrameLayout < FrameLayout < FrameLayout < FrameLayout < [vid="package_dx_container"]',
+          snapshotUrls: 'https://i.gkd.li/i/29924327',
         },
       ],
     },
