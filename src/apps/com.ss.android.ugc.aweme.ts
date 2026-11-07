@@ -26,16 +26,63 @@ export default defineGkdApp({
     {
       key: 1,
       name: '局部广告',
+      desc: '点击x掉',
+      fastQuery: true,
+      activityIds: ['.live.LivePlayActivity', '.detail.ui.DetailActivity'],
       rules: [
         {
           key: 1,
-          name: '直播右侧卡片广告',
-          fastQuery: true,
-          activityIds: '.live.LivePlayActivity',
+          name: '①直播间右下角浮窗',
           matches:
-            '@View[clickable=true][width<80&&height<80] +2 View >4 [text="立即查看"][visibleToUser=true]',
-          exampleUrls: 'https://e.gkd.li/7c97fdc7-9de0-403d-9817-e43da0eb8a31',
-          snapshotUrls: 'https://i.gkd.li/i/22743677',
+            '@[width<114 && height<114][top=parent.top] <3 [childCount>4] >5 [text="打开游戏" || text="下载" || text="立即查看"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/22743677',
+            'https://i.gkd.li/i/30297510',
+            'https://i.gkd.li/i/33388572',
+          ],
+        },
+        {
+          key: 2,
+          name: '②直播间右下角浮窗',
+          matches:
+            '[desc="购买"][visibleToUser=true] <n * < * -2 FrameLayout > [vid="iv_close"][clickable=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/26754062', // LiveMeasureOnceRelativeLayout
+            'https://i.gkd.li/i/29388290',
+            'https://i.gkd.li/i/30374168', // RelativeLayout
+          ],
+          exampleUrls: 'https://e.gkd.li/8c5e6526-83e5-4ec6-b532-367ff6045bfc',
+        },
+        {
+          key: 3,
+          name: '③直播间右下角浮窗', //全封装
+          matches:
+            '@ViewGroup[vid=null][text=null][desc=null][width<110 && height<110][visibleToUser=true] <2 ViewGroup[childCount<8] <<5 FrameLayout[index=parent.childCount.minus(2)] <n ViewGroup[childCount>4][left=0 && top=0] +n ViewGroup >5 EditText[text="说点什么..."][clickable=true][visibleToUser=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/30374542',
+            'https://i.gkd.li/i/30374544',
+          ],
+        },
+        {
+          key: 4,
+          name: '④视频页左下角卡片',
+          activityIds: '.main.MainActivity',
+          matches:
+            '@UIView[clickable=true][id=null][text=""][desc=""][childCount=0] + UIText[text="广告"][visibleToUser=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/29403677',
+            'https://i.gkd.li/i/29403704',
+          ],
+          exampleUrls: 'https://e.gkd.li/ef72c43c-5fab-4b09-bbd0-bb0d754d2c12',
+        },
+        {
+          key: 5,
+          name: '⑤视频页下载app',
+          activityIds: '.main.MainActivity',
+          matches:
+            '[text="立即下载"] <2 LinearLayout + @[clickable=true] > [vid="iv_close"]',
+          snapshotUrls: 'https://i.gkd.li/i/33473832',
+          exampleUrls: 'https://e.gkd.li/689d03bf-5bb2-4b30-bef5-35bef5bed112',
         },
       ],
     },
@@ -333,7 +380,7 @@ export default defineGkdApp({
     {
       key: 24,
       name: '功能类-刷到推广视频时[上滑]',
-      desc: '广告/应用/购物/游戏/咨询/服务/预约/子薇剧场 等推广视频',
+      desc: '广告/应用/购物/咨询/服务/预约/子薇剧场 等推广视频',
       rules: [
         {
           fastQuery: true,
@@ -352,7 +399,7 @@ export default defineGkdApp({
           },
           activityIds: '.main.MainActivity',
           matches:
-            '([visibleToUser=true] > [text$="广告" || text$="（推广）"][vid="desc" || desc="广告"]) || ([text="应用" || text="购物" || text$="游戏" || text="咨询" || text="服务" || text="预约" || text="子薇剧场"][text.length<6][index=1][visibleToUser=true]) || (ViewGroup[childCount=5] > ImageView +3 [text^="已售" || text^=" 已售"] - TextView - [text="讲解中 丨 "][index=1][visibleToUser=true])', // (选择器A) || (选择器B) || (选择器C)
+            '([visibleToUser=true] > [text$="广告" || text$="（推广）"][vid="desc" || desc="广告"]) || ([text="应用" || text="购物" || text="咨询" || text="服务" || text="预约" || text="子薇剧场"][text.length<6][index=1][visibleToUser=true]) || (ViewGroup[childCount=5] > ImageView +3 [text^="已售" || text^=" 已售"] - TextView - [text="讲解中 丨 "][index=1][visibleToUser=true])', // (选择器A) || (选择器B) || (选择器C)
           snapshotUrls: [
             // 选择器A
             'https://i.gkd.li/i/21142063', // [text$="广告"][vid="desc"]
@@ -363,8 +410,6 @@ export default defineGkdApp({
             // 选择器B
             'https://i.gkd.li/i/21142589', //应用
             'https://i.gkd.li/i/21142249', //购物
-            'https://i.gkd.li/i/21142871', //游戏
-            'https://i.gkd.li/i/21725628', //小游戏
             'https://i.gkd.li/i/25355868', //咨询
             'https://i.gkd.li/i/29403479', //服务
             'https://i.gkd.li/i/21765934', //预约
@@ -375,6 +420,63 @@ export default defineGkdApp({
             'https://i.gkd.li/i/29605901', //[text^=" 已售"]
             'https://i.gkd.li/i/29707532', //[text="已售1"](没有"+")
           ],
+        },
+      ],
+    },
+    {
+      key: 2401, // 拆分于key24, 功能相似, 故让其俩挨在一起
+      name: '功能类-刷到游戏视频时[上滑]',
+      desc: '游戏类推广视频',
+      rules: [
+        {
+          fastQuery: true,
+          actionCd: 300,
+          actionDelay: 200,
+          swipeArg: {
+            start: {
+              x: 'screenWidth/2',
+              y: 'screenHeight * 0.6',
+            },
+            end: {
+              x: 'screenWidth/2',
+              y: 'screenHeight * 0.3',
+            },
+            duration: 200,
+          },
+          activityIds: '.main.MainActivity',
+          matches: '[text$="游戏"][text.length<6][index=1][visibleToUser=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/21142871', //游戏
+            'https://i.gkd.li/i/21725628', //小游戏
+          ],
+        },
+      ],
+    },
+    {
+      key: 25,
+      name: '功能类-刷到直播时[上滑]',
+      desc: '不想看直播,划掉',
+      rules: [
+        {
+          fastQuery: true,
+          actionCd: 300,
+          actionDelay: 200, //刷视频时,让下一个视频完整显示才触发[上滑]
+          swipeArg: {
+            start: {
+              x: 'screenWidth/2',
+              y: 'screenHeight * 0.6',
+            },
+            end: {
+              x: 'screenWidth/2',
+              y: 'screenHeight * 0.3',
+            },
+            duration: 200,
+          },
+          activityIds: '.main.MainActivity',
+          matches:
+            '[desc*="点击进入直播间"] < [childCount>1] < FrameLayout < [childCount=1] < [visibleToUser=true] < [vid="root_view"] <2 [vid="viewpager"]',
+          snapshotUrls: 'https://i.gkd.li/i/32612015',
+          exampleUrls: 'https://e.gkd.li/9f3f9eb2-4e56-4744-874c-223e28f5ddfe',
         },
       ],
     },
@@ -488,6 +590,7 @@ export default defineGkdApp({
         '.searcharticle.detail.ArticleDetailActivity',
         '.search.activity.SearchResultActivity',
         '.detail.ultra.ui.UltraDetailActivity',
+        '.playlet.videodetail.PlayletVideoPlayActivity',
       ],
       rules: [
         {
@@ -497,6 +600,7 @@ export default defineGkdApp({
             'https://i.gkd.li/i/25356027',
             'https://i.gkd.li/i/26240597',
             'https://i.gkd.li/i/26240834',
+            'https://i.gkd.li/i/32637248',
           ],
           excludeSnapshotUrls: 'https://i.gkd.li/i/25356355', // 排除 [展开更多]
           exampleUrls: [
@@ -527,6 +631,8 @@ export default defineGkdApp({
         'com.bytedance.ies.ugc.aweme.photos.detail.flow.page.FlowPageActivity',
         '.searcharticle.detail.ArticleDetailActivity',
         '.search.activity.SearchResultActivity',
+        '.detail.ultra.ui.UltraDetailActivity',
+        '.playlet.videodetail.PlayletVideoPlayActivity',
       ],
       rules: [
         {
@@ -546,44 +652,6 @@ export default defineGkdApp({
           matches:
             '[text^="展开更多"] <2 @[clickable=true][childCount=3] <<n ViewPager <(3,4) LinearLayout + [childCount=2] > [desc$="评论区"] + [vid="back_btn"]',
           snapshotUrls: 'https://i.gkd.li/i/31308553',
-        },
-      ],
-    },
-    {
-      key: 31,
-      name: '局部广告-直播间右下角浮窗',
-      desc: '点击x掉',
-      fastQuery: true,
-      activityIds: '.live.LivePlayActivity',
-      rules: [
-        {
-          key: 0,
-          name: '购买',
-          matches:
-            '[desc="购买"][visibleToUser=true] <n * < * -2 FrameLayout > [vid="iv_close"][clickable=true]',
-          snapshotUrls: [
-            'https://i.gkd.li/i/26754062', // LiveMeasureOnceRelativeLayout
-            'https://i.gkd.li/i/29388290',
-            'https://i.gkd.li/i/30374168', // RelativeLayout
-          ],
-          exampleUrls: 'https://e.gkd.li/8c5e6526-83e5-4ec6-b532-367ff6045bfc',
-        },
-        {
-          key: 1,
-          name: '打开游戏',
-          matches:
-            '@[visibleToUser=true] <3 [childCount=5] >5 [text="打开游戏"]',
-          snapshotUrls: 'https://i.gkd.li/i/30297510',
-        },
-        {
-          key: 2,
-          name: '全封装',
-          matches:
-            '@ViewGroup[vid=null][text=null][desc=null][width<110 && height<110][visibleToUser=true] <2 ViewGroup[childCount<8] <<5 FrameLayout[index=parent.childCount.minus(2)] <n ViewGroup[childCount>4][left=0 && top=0] +n ViewGroup >5 EditText[text="说点什么..."][clickable=true][visibleToUser=true]',
-          snapshotUrls: [
-            'https://i.gkd.li/i/30374542',
-            'https://i.gkd.li/i/30374544',
-          ],
         },
       ],
     },
@@ -613,6 +681,8 @@ export default defineGkdApp({
         'com.bytedance.ies.ugc.aweme.photos.detail.flow.page.FlowPageActivity',
         '.searcharticle.detail.ArticleDetailActivity',
         '.search.activity.SearchResultActivity',
+        '.detail.ultra.ui.UltraDetailActivity',
+        '.playlet.videodetail.PlayletVideoPlayActivity',
       ],
       rules: [
         {
@@ -644,6 +714,8 @@ export default defineGkdApp({
         'com.bytedance.ies.ugc.aweme.photos.detail.flow.page.FlowPageActivity',
         '.searcharticle.detail.ArticleDetailActivity',
         '.search.activity.SearchResultActivity',
+        '.detail.ultra.ui.UltraDetailActivity',
+        '.playlet.videodetail.PlayletVideoPlayActivity',
       ],
       rules: [
         {
@@ -709,24 +781,6 @@ export default defineGkdApp({
           ],
           snapshotUrls: 'https://i.gkd.li/i/29403171',
           exampleUrls: 'https://e.gkd.li/cbf081a4-4a57-4173-af3a-27334d7a2be6',
-        },
-      ],
-    },
-    {
-      key: 39,
-      name: '局部广告-视频流-左下角卡片',
-      desc: '一些视频中途弹出卡片广告',
-      rules: [
-        {
-          fastQuery: true,
-          activityIds: '.main.MainActivity',
-          matches:
-            '@UIView[clickable=true][id=null][text=""][desc=""][childCount=0] + UIText[text="广告"][visibleToUser=true]',
-          snapshotUrls: [
-            'https://i.gkd.li/i/29403677',
-            'https://i.gkd.li/i/29403704',
-          ],
-          exampleUrls: 'https://e.gkd.li/ef72c43c-5fab-4b09-bbd0-bb0d754d2c12',
         },
       ],
     },
