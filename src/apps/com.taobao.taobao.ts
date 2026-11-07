@@ -35,6 +35,8 @@ export default defineGkdApp({
             'com.taobao.tao.TBMainActivity',
             'com.taobao.android.tbabilitykit.pop.StdPopContainerActivity',
             'com.taobao.android.detail.wrapper.activity.DetailActivity',
+            'com.alibaba.android.ultron.vfw.weex2.highPerformance.widget.UltronTradeHybridActivity',
+            'com.taobao.message.activity.ChatActivity',
           ],
           matches: '@[desc="关闭按钮"] - [vid="poplayer_native_state_id"]',
           snapshotUrls: [
@@ -42,6 +44,8 @@ export default defineGkdApp({
             'https://i.gkd.li/i/12648746',
             'https://i.gkd.li/i/14060521',
             'https://i.gkd.li/i/14905372',
+            'https://i.gkd.li/i/30856922',
+            'https://i.gkd.li/i/34168285',
           ],
         },
         {
@@ -88,22 +92,35 @@ export default defineGkdApp({
             'com.taobao.tao.TBMainActivity',
           ],
           matches:
-            '@[clickable=true][childCount=0][width<150 && height<150][index=parent.childCount.minus(1)] -n TextView[text.length>0] <n View <<n WebView[vid="poplayer_inner_view"]',
+            '@[name$=".TextView" || name$=".Image"][clickable=true][childCount=0][width<150 && height<150][index=parent.childCount.minus(1)] <n View >(1,2,3) [id=null][text$="用" || text$="收下" || text*="立减"] <<n WebView[vid="poplayer_inner_view"]',
           snapshotUrls: [
             'https://i.gkd.li/i/22949963',
             'https://i.gkd.li/i/23289412',
             'https://i.gkd.li/i/23567053',
             'https://i.gkd.li/i/24982514',
+            'https://i.gkd.li/i/26044614',
+            'https://i.gkd.li/i/28312957',
           ],
+        },
+        {
+          key: 5,
+          fastQuery: true,
+          activityIds:
+            'com.taobao.android.tbabilitykit.pop.StdPopContainerActivity',
+          matches:
+            'Image[text*=".jpg"][width<150 && height<150] < [visibleToUser=true] < @View[clickable=true][childCount=1] <<n FrameLayout[id=null] - [vid="layermanager_penetrate_webview_container_id"]',
+          snapshotUrls: 'https://i.gkd.li/i/30710740',
         },
       ],
     },
     {
       key: 2,
-      name: '局部广告-消息页面热门活动卡片',
+      name: '局部广告-横幅广告',
+      fastQuery: true,
       rules: [
         {
-          fastQuery: true,
+          key: 0,
+          name: '消息页',
           activityIds: [
             'com.taobao.tao.welcome.Welcome',
             'com.taobao.tao.TBMainActivity',
@@ -115,15 +132,42 @@ export default defineGkdApp({
             'https://i.gkd.li/i/23140899',
           ],
         },
+        {
+          key: 1,
+          name: '商品详情页',
+          activityIds: 'com.taobao.android.detail.alittdetail.TTDetailActivity',
+          matches:
+            '@FrameLayout[desc="关闭"][clickable=true][visibleToUser=true] -3 ImageView <<3 [vid="bottom_float_dx"]',
+          snapshotUrls: 'https://i.gkd.li/i/25639274',
+          exampleUrls: 'https://e.gkd.li/9bbe3e98-3a93-49d5-9b7a-74e039db0a36',
+        },
+        {
+          key: 2,
+          name: '订单页',
+          activityIds: 'com.taobao.android.order.bundle.TBOrderListActivity',
+          matches:
+            '@TextView[clickable=true][visibleToUser=true][text.length=1] -4 ImageView < LinearLayout[childCount=5] <<3 [vid="recycler_view"]',
+          snapshotUrls: 'https://i.gkd.li/i/25639650',
+          exampleUrls: 'https://e.gkd.li/e86fb61e-d4ed-4862-b677-86ddf45c9b77',
+        },
+        {
+          key: 3,
+          name: '首页',
+          matchRoot: true, // 截取快照才触发，加上试试
+          activityIds: 'com.taobao.tao.welcome.Welcome',
+          matches: '[desc.length=4] < * + @[clickable=true] > [text="뉜"]', // 实机测试过，"뉜"韩语？是关闭按钮有作用
+          snapshotUrls: 'https://i.gkd.li/i/25658605',
+          exampleUrls: 'https://e.gkd.li/97345886-418c-4a43-a5e2-014ee822b6a2',
+        },
       ],
     },
     {
       key: 3,
       name: '局部广告-悬浮广告',
+      fastQuery: true,
       rules: [
         {
           key: 0,
-          fastQuery: true,
           activityIds: 'com.taobao.browser.BrowserActivity',
           matches:
             '@Image[childCount=0][clickable=true][text!=null] < View <2 View < WebView < o0 <2 WebView < [id="android:id/content"]',
@@ -131,7 +175,6 @@ export default defineGkdApp({
         },
         {
           key: 1,
-          fastQuery: true,
           activityIds: 'com.taobao.themis.container.app.TMSActivity',
           matches:
             '@Image[childCount=0][clickable=true][text!=null] <2 View < View < View <9 View < WebView < m0 <2 WebView < RelativeLayout < [vid="tms_tab_content_view"]',
@@ -140,7 +183,6 @@ export default defineGkdApp({
         },
         {
           key: 2,
-          fastQuery: true,
           activityIds: 'com.taobao.android.detail.alittdetail.TTDetailActivity',
           matches:
             '@FrameLayout[desc="关闭"][clickable=true] <<n [vid="ll_dinamicx_container"]',
@@ -161,15 +203,17 @@ export default defineGkdApp({
             'com.taobao.android.tbabilitykit.pop.StdPopContainerActivity',
             'com.taobao.tao.TBMainActivity',
             'com.taobao.tao.welcome.Welcome',
+            'com.alibaba.android.ultron.vfw.weex2.highPerformance.widget.UltronTradeHybridActivity',
           ],
           matches:
-            '@Image[childCount=0][visibleToUser=true][text!=null] <n View >(1,2) [visibleToUser=true][text*="消息通知" || text*="系统通知"] <<n [vid="poplayer_inner_view"]',
+            '@Image[childCount=0][visibleToUser=true][text!=null] <n View >(1,2) [visibleToUser=true][text^="开启" || text*="消息"][text*="通知"] <<n [vid="poplayer_inner_view"]',
           snapshotUrls: [
             'https://i.gkd.li/i/13446901',
             'https://i.gkd.li/i/13455424',
             'https://i.gkd.li/i/15104645',
             'https://i.gkd.li/i/18407606',
             'https://i.gkd.li/i/21789921',
+            'https://i.gkd.li/i/30726795',
           ],
         },
       ],
@@ -222,21 +266,24 @@ export default defineGkdApp({
       key: 13,
       name: '功能类-关闭小额免密支付',
       desc: '在支付前/后出现',
+      fastQuery: true,
+      activityIds: 'com.alipay.android.msp.ui.views.MspContainerActivity',
       rules: [
         {
           key: 0,
-          fastQuery: true,
-          activityIds: 'com.alipay.android.msp.ui.views.MspContainerActivity',
+          name: '①点击[关闭]或[不感兴趣]',
           matches:
-            '[text="关闭"] < @[clickable=true] <3 * < * + * >3 [text$="小额免密支付"]',
+            '[text="关闭" || text="不感兴趣"] < @[clickable=true] <3 * < * + * >3 [text$="小额免密支付"]',
           exampleUrls:
             'https://m.gkd.li/57941037/2322af2e-52e2-4059-9757-f26940f4b2fc',
-          snapshotUrls: 'https://i.gkd.li/i/13438414',
+          snapshotUrls: [
+            'https://i.gkd.li/i/13438414', // 关闭
+            'https://i.gkd.li/i/26826092', // 不感兴趣
+          ],
         },
         {
           key: 1,
-          fastQuery: true,
-          activityIds: 'com.alipay.android.msp.ui.views.MspContainerActivity',
+          name: '②取消勾选',
           matches: '@[checked=true] < * - [text="开通淘宝小额免密支付"]',
           exampleUrls:
             'https://m.gkd.li/57941037/3ae78555-c0a5-4f76-8096-c4d1593ebb77',
@@ -324,10 +371,16 @@ export default defineGkdApp({
       desc: '点击[确认授权]',
       rules: [
         {
-          activityIds: 'com.taobao.browser.BrowserActivity',
-          matches: '[text="确认授权"][visibleToUser=true]',
+          activityIds: [
+            'com.taobao.browser.BrowserActivity',
+            'com.taobao.themis.container.app.TMSActivity',
+          ],
+          matches: '[text="确认授权"][clickable=true]',
           exampleUrls: 'https://e.gkd.li/e6250a9c-3fee-4470-8c7c-1d28ea63d2a5',
-          snapshotUrls: 'https://i.gkd.li/i/18271783',
+          snapshotUrls: [
+            'https://i.gkd.li/i/18271783',
+            'https://i.gkd.li/i/28432106',
+          ],
         },
       ],
     },
@@ -340,15 +393,14 @@ export default defineGkdApp({
           key: 0,
           fastQuery: true,
           activityIds: 'com.alipay.android.msp.ui.views.MspContainerActivity',
-          matches: [
-            '[text$="推荐你"][visibleToUser=true]',
-            '@[clickable=true] > [text="关闭"][visibleToUser=true]',
-          ],
+          matches:
+            '[text="关闭" || text="跳过"] < @[clickable=true] -(1,2) [visibleToUser=true] >(1,2) [text$="推荐你" || text="开通指纹支付"]',
           exampleUrls: 'https://e.gkd.li/1646b159-a3ca-4cd8-9519-729e70acb72a',
           snapshotUrls: [
             'https://i.gkd.li/i/14155537',
             'https://i.gkd.li/i/18296345',
             'https://i.gkd.li/i/22113615',
+            'https://i.gkd.li/i/30726794', // 跳过 开通指纹支付
           ],
         },
         {
@@ -364,31 +416,48 @@ export default defineGkdApp({
     },
     {
       key: 22,
-      name: '局部广告-搜索页广告',
-      desc: '自动隐藏猜你想搜、热榜',
+      name: '功能类-自动隐藏搜索页[猜你想搜][热榜]',
+      desc: '点击隐藏 ①猜你想搜 ②热榜',
+      fastQuery: true,
+      activityIds: 'com.taobao.search.uniform.SearchActivity',
       rules: [
         {
           key: 0,
-          name: '猜你想搜',
-          fastQuery: true,
-          activityIds: 'com.taobao.search.uniform.SearchActivity',
+          name: '①猜你想搜',
           matches: '[vid="hideBtn"][desc="隐藏"][clickable=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/23165368', // 隐藏前
             'https://i.gkd.li/i/23165384', // 隐藏后
           ],
+          exampleUrls: 'https://e.gkd.li/cce4690f-ada3-4de8-b7cd-31259ec6ef58',
         },
         {
           key: 1,
-          name: '热榜',
-          fastQuery: true,
-          activityIds: 'com.taobao.search.uniform.SearchActivity',
+          name: '②热榜',
           matches:
-            '@[desc="隐藏榜单"][clickable=true] <<n [vid="dynamic_container"]',
+            '@[desc="隐藏榜单"][clickable=true] <n ViewGroup < [vid="dynamic_container"]',
           snapshotUrls: [
             'https://i.gkd.li/i/23165418', // 隐藏前
             'https://i.gkd.li/i/23165427', // 隐藏后
           ],
+          exampleUrls: 'https://e.gkd.li/1c06ab8e-178b-469e-8288-6e1b73e4c1e9',
+        },
+      ],
+    },
+    {
+      key: 23,
+      name: '功能类-付款前邀开通先用后付',
+      desc: '点击[不感兴趣]',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: 'com.alipay.android.msp.ui.views.MspContainerActivity',
+          matches: [
+            '[text*="先用后付服务协议"]',
+            '@[clickable=true] > [text="不感兴趣"]',
+          ],
+          snapshotUrls: 'https://i.gkd.li/i/26426385',
+          exampleUrls: 'https://e.gkd.li/535839e5-4912-4c7e-96a4-d9b39a420a32',
         },
       ],
     },
